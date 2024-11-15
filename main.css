@@ -36,5 +36,12 @@ button {
     cursor: pointer;
     margin: 20px;
     padding: 20px;
+    transition: 250ms;
 }
 
+button:hover {
+    background-color: rgb(53, 51, 51);
+    border-color: orangered;
+    color: orangered;
+    transform: translateY(-3px);
+}
