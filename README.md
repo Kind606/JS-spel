@@ -34,8 +34,8 @@ command to run if program contains helper info
 
 Contributors names and contact info
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
+Kevin Hellgren
+ex. [@DomPizzie](https://github.com/)
 
 ## Version History
 
