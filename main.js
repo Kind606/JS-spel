@@ -158,6 +158,7 @@ function useTool(tool) {
     if (activeScene === "loaf" /* && tool === "knife" */) {
         loadGoodEndingScene();
     }
+    else alert("Du kan inte använda detta verktyg än!")
     
 }
 
