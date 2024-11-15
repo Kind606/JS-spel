@@ -8,4 +8,4 @@ You are lost in a spooky forest and end up at a hotell, which has a spooky vibe.
 
 ## Link to the game
 
-https://github.com/Kind606/JS-spel
+https://kind606.github.io/JS-spel/
