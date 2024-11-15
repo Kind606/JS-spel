@@ -1,15 +1,24 @@
+
+/**
+ * Körs när DOM har laddats. Startar applikationen genom att antingen ladda en sparad scen 
+ * eller starta från början.
+ */
+
 window.addEventListener("DOMContentLoaded", main);
 
 
-
+// Här sätts lagrar jag active scene och tools
 let activeScene = "";
 let tools = [];
 
+/**
+ * Huvudfunktion som laddar den sparade scenen eller startar från början.
+ */
 
 function main() {
-
+    
     const savedScene = localStorage.getItem("activeScene");
-
+    // här laddar jag in scenen som är sparad
     if (savedScene) {
         loadScene(savedScene);
     } else {
@@ -17,7 +26,13 @@ function main() {
     }
 }
 
+/**
+ * Laddar rätt scen baserat på ett sparat scen-namn.
+ * @param {string} savedScene - Namnet på den scen som ska laddas.
+ */
+
 function loadScene(savedScene) {
+    // här laddar den in rätt scene beroande på vilken scene som är lagrad på local storage
     switch (savedScene) {
         case "starting":
             loadStartingSecne();
@@ -47,9 +62,15 @@ function loadScene(savedScene) {
     }
 }
 
+/**
+ * Laddar startsidan och sätter den aktiva scenen till "starting".
+ */
+
 function loadStartingSecne() {
+    // denna funktionen ser till att att bort allt så jag kan lägga till allt på nytt
     removeContent()
     activeScene = "starting";
+    // Denna funktion ser till att ladda om save scene som ser till att spara den nuvarande activa scenen
     saveScene();
     const choices = document.querySelector(".choices");
     const knapp1 = document.createElement("button");
@@ -63,6 +84,10 @@ function loadStartingSecne() {
     document.getElementById("backGround").style.backgroundImage = "url('Realspökhus.jpg')";
     choices.append(text, knapp1, knapp2);
 }
+
+/**
+ * Laddar hotellsalsscenen och sätter den aktiva scenen till "hall".
+ */
 
 function loadHotelHallScene() {
     removeContent()
@@ -83,6 +108,10 @@ function loadHotelHallScene() {
     choices.appendChild(knapp2);
 }
 
+/**
+ * Laddar bilscenen och sätter den aktiva scenen till "car".
+ */
+
 function loadGoToCarScene() {
     removeContent()
     activeScene = "car";
@@ -101,6 +130,10 @@ function loadGoToCarScene() {
     choices.appendChild(knapp1);
     choices.appendChild(knapp2);
 }
+
+/**
+ * Laddar köksscenen och sätter den aktiva scenen till "Kitchen".
+ */
 
 function loadKitchenScene() {
     removeContent()
@@ -125,25 +158,40 @@ function loadKitchenScene() {
     choices.append(text, knapp1, knapp2, btn, knapphammare);
 }   
 
+/**
+ * Hämtar en kniv och lägger till den i verktygslistan.
+ */
+
 function getKnife() {
+    // denna if satsen kollar om tools arrayen har en variable som heter "kniv" är med i arrayen om inte så lägger den till den.
     if (!tools.includes("kniv")) {
         tools.push("kniv");
+        // denna funktion ser till att efter kniv har pushats in så laddar den in en knapp till html så att den blir synlig och användbar
         renderTools();
     }
 }
 
+/**
+ * Hämtar en hammare och lägger till den i verktygslistan.
+ */
+
 function getHammer() {
+    // samma som getKnife
     if (!tools.includes("hammare")) {
         tools.push("hammare");
         renderTools();
     }
 }
 
+/**
+ * Renderar verktyg som knappar baserat på listan `tools`.
+ */
+
 function renderTools() {
     const toolsContainer = document.querySelector(".tools");
     
     toolsContainer.innerText = "";
-
+    // här ser den till att ge en knapp till varje sak som är med i arrayen
     for (const tool of tools) {
         const button = document.createElement("button");
         button.innerText = tool;
@@ -154,13 +202,23 @@ function renderTools() {
     }
 }
 
+/**
+ * Använder ett verktyg beroende på den aktuella scenen.
+ * @param {string} tool - Verktyget som ska användas.
+ */
+
 function useTool(tool) {
+    // denna funktion ser till att du bara kan använda kniven eller hammaren när du är på "loaf" scenen
     if (activeScene === "loaf" /* && tool === "knife" */) {
         loadGoodEndingScene();
     }
     else alert("Du kan inte använda detta verktyg än!")
     
 }
+
+/**
+ * Laddar vindscenen och sätter den aktiva scenen till "loaf".
+ */
 
 function loadLoafScene() {
     removeContent();
@@ -181,6 +239,10 @@ function loadLoafScene() {
     choices.appendChild(knapp2);
 }
 
+/**
+ * Laddar lämnascenen och sätter den aktiva scenen till "leave".
+ */
+
 function loadLeaveScene() {
     removeTools()
     removeContent()
@@ -197,6 +259,10 @@ function loadLeaveScene() {
     choices.appendChild(text)
     choices.appendChild(knapp1);
 }
+
+/**
+ * Laddar braslutscenen och sätter den aktiva scenen till "goodEnding".
+ */
 
 function loadGoodEndingScene() {
     removeTools()
@@ -215,10 +281,15 @@ function loadGoodEndingScene() {
     choices.appendChild(knapp1);
 }
 
+/**
+ * Tömmer allt innehåll.
+ */
 
 function removeContent() {
+    // detta är funktionen som ser till att allt inom choices diven töms
     document.querySelector(".choices").innerHTML = "";
 }
+
 
 function removeKnife() {
     const indexOfKnife = tools.indexOf("knife");
@@ -227,11 +298,21 @@ function removeKnife() {
 
 }
 
+/**
+ * Tömmer allt innehåll i arrayen.
+ */
+
 function removeTools() {
+    // denna tar bort allt i arrayen och sedan kallar på renderTools så att det updateras
     tools = []
     renderTools();
 }
 
+/**
+ * Sparar den aktiva scenen.
+ */
+
 function saveScene() {
+    // denna funktion ser till att spara active scenen så du kan kalla på den i main funktionen
     localStorage.setItem("activeScene", activeScene);
 }
